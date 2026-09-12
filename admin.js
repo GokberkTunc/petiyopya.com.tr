@@ -228,6 +228,31 @@
       return true;
     },
 
+    syncDelivery(yemeksepetiUrl, trendyolGoUrl, silent) {
+      let count = 0;
+      if (yemeksepetiUrl) {
+        document.querySelectorAll('.js-yemeksepeti-link').forEach((el) => {
+          el.setAttribute('href', yemeksepetiUrl.trim());
+          this.pulseElement(el);
+          count++;
+        });
+        this.updateStoreConfigVar('yemeksepetiUrl', `"${yemeksepetiUrl.trim()}"`);
+      }
+      if (trendyolGoUrl) {
+        document.querySelectorAll('.js-trendyol-link').forEach((el) => {
+          el.setAttribute('href', trendyolGoUrl.trim());
+          this.pulseElement(el);
+          count++;
+        });
+        this.updateStoreConfigVar('trendyolGoUrl', `"${trendyolGoUrl.trim()}"`);
+      }
+      incrementChangeCount();
+      if (!silent) {
+        showToast(`🛵 Online sipariş bağlantıları (${count} buton) güncellendi!`, 'success');
+      }
+      return true;
+    },
+
     pulseElement(el) {
       if (!el) return;
       el.classList.add('petiyopya-synced');
@@ -509,6 +534,7 @@
   function enableAdminMode() {
     if (isAdminActive) return;
     isAdminActive = true;
+    window.__petiyopyaAdminActive = true;
     isPreviewMode = false;
 
     injectAdminStyles();
@@ -1130,6 +1156,19 @@
               <input type="text" id="drawer-hours-weekend" placeholder="11:00 - 00:00">
             </div>
           </div>
+
+          <div class="drawer-grid-2">
+            <div class="drawer-field">
+              <label>🛵 Yemeksepeti Market Linki</label>
+              <input type="url" id="drawer-store-yemeksepeti" placeholder="https://www.yemeksepeti.com/shop/...">
+              <small>Tüm Yemeksepeti butonlarını günceller.</small>
+            </div>
+            <div class="drawer-field">
+              <label>📲 Trendyol Go Linki</label>
+              <input type="text" id="drawer-store-trendyol" placeholder="https://www.trendyol.com veya trendyol://">
+              <small>Tüm Trendyol Go butonlarını günceller.</small>
+            </div>
+          </div>
         </div>
 
         <div class="drawer-footer">
@@ -1173,6 +1212,12 @@
     const weekendRow = document.querySelector('#weekly-hours-table .day-row[data-day="6"] span:last-child');
     if (weekendRow) document.getElementById('drawer-hours-weekend').value = weekendRow.textContent.trim();
 
+    const ymLink = document.querySelector('.js-yemeksepeti-link');
+    if (ymLink) document.getElementById('drawer-store-yemeksepeti').value = ymLink.getAttribute('href') || '';
+
+    const tyLink = document.querySelector('.js-trendyol-link');
+    if (tyLink) document.getElementById('drawer-store-trendyol').value = tyLink.getAttribute('href') || '';
+
     drawer.classList.add('open');
   }
 
@@ -1189,6 +1234,8 @@
     const weekdayHours = document.getElementById('drawer-hours-weekday').value;
     const weekendHours = document.getElementById('drawer-hours-weekend').value;
     const nameVal = document.getElementById('drawer-store-name').value;
+    const ymVal = document.getElementById('drawer-store-yemeksepeti').value;
+    const tyVal = document.getElementById('drawer-store-trendyol').value;
 
     let anyUpdated = false;
     if (nameVal) anyUpdated = SmartSync.syncStoreName(nameVal, true) || anyUpdated;
@@ -1197,6 +1244,7 @@
     if (addrVal) anyUpdated = SmartSync.syncAddress(addrVal, true) || anyUpdated;
     if (emailVal) anyUpdated = SmartSync.syncEmail(emailVal, true) || anyUpdated;
     if (weekdayHours || weekendHours) anyUpdated = SmartSync.syncHours(weekdayHours, weekendHours, true) || anyUpdated;
+    if (ymVal || tyVal) anyUpdated = SmartSync.syncDelivery(ymVal, tyVal, true) || anyUpdated;
 
     closeSmartDrawer();
 
@@ -1212,6 +1260,7 @@
   // ============================================================
   function togglePreviewMode() {
     isPreviewMode = !isPreviewMode;
+    window.__petiyopyaAdminActive = !isPreviewMode;
     const previewBtn = document.getElementById('petiyopya-preview-btn');
 
     if (isPreviewMode) {
@@ -1254,6 +1303,7 @@
     }
 
     isAdminActive = false;
+    window.__petiyopyaAdminActive = false;
     isPreviewMode = false;
     changeCount = 0;
 
@@ -1820,6 +1870,9 @@
 
       const drawerInClone = clone.querySelector('#petiyopya-smart-drawer');
       if (drawerInClone) drawerInClone.remove();
+
+      const trendyolModalInClone = clone.querySelector('#trendyol-go-modal');
+      if (trendyolModalInClone) trendyolModalInClone.remove();
 
       clone.classList.remove('petiyopya-preview-active');
       const bodyInClone = clone.querySelector('body');

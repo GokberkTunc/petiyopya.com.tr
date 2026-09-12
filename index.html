@@ -198,6 +198,9 @@
       address: "Bahçelievler Mah. Prof. Dr. Orhan Oğuz Cad. 59/A Tepebaşı/Eskişehir",
       workingHoursWeekday: "11:00 - 00:00",
       workingHoursWeekend: "11:00 - 00:00",
+      yemeksepetiUrl: "https://www.yemeksepeti.com/shop/aorj/petiyopya-pet-shop",
+      trendyolGoUrl: "https://www.trendyol.com",
+      trendyolGoStoreName: "Petiyopya Pet Shop",
       mapsDirectUrl: "https://www.google.com/maps/search/?api=1&query=Bah%C3%A7elievler%20Mah.%20Prof.%20Dr.%20Orhan%20O%C4%9Fuz%20Cad.%2059%2FA%20Tepeba%C5%9F%C4%B1%2FEski%C5%9Fehir",
       mapsReviewUrl: "https://maps.google.com/?q=Bah%C3%A7elievler+Mah.+Prof.+Dr.+Orhan+O%C4%9Fuz+Cad.+59%2FA+Tepeba%C5%9F%C4%B1+Eski%C5%9Fehir"
     };
@@ -207,12 +210,24 @@
   <!-- TOP BANNER (Aciliyet & Esnaf Güvencesi) -->
   <!-- ============================================================ -->
   <div class="bg-earth-950 text-earth-200 text-xs sm:text-sm py-2 px-4 border-b border-earth-800">
-    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-2 text-center sm:text-left">
-      <div class="flex items-center gap-2">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-2 text-center md:text-left">
+      <div class="flex items-center gap-2 flex-wrap justify-center md:justify-start">
         <span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-semibold bg-emeraldBrand-600 text-white">
           ESKİŞEHİR
         </span>
-        <span>🐾 Kargo beklemeden, orijinal taze mamayı hemen mağazamızdan teslim alın!</span>
+        <span class="hidden sm:inline">🐾 Orijinal taze mama ve pet ürünleri kapınızda!</span>
+        <span class="text-earth-700 hidden lg:inline">•</span>
+        <div class="inline-flex items-center gap-1.5 ml-0 sm:ml-1">
+          <span class="text-[11px] text-earth-400 font-semibold hidden md:inline">🛵 Hızlı Kurye:</span>
+          <a href="https://www.yemeksepeti.com/shop/aorj/petiyopya-pet-shop" target="_blank" rel="noopener noreferrer" class="js-yemeksepeti-link inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-[#ea004b] hover:bg-[#d00042] text-white text-[11px] font-bold transition-transform hover:scale-105 shadow-sm" title="Yemeksepeti Market'ten Sipariş Ver">
+            <span>Yemeksepeti</span>
+            <span class="text-[9px] opacity-80">↗</span>
+          </a>
+          <a href="https://www.trendyol.com" target="_blank" rel="noopener noreferrer" class="js-trendyol-link inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-[#f27a1a] hover:bg-[#d96509] text-white text-[11px] font-bold transition-transform hover:scale-105 shadow-sm" data-store="Petiyopya Pet Shop" title="Trendyol Go uygulamasında 'Petiyopya Pet Shop' mağazamızı bulun">
+            <span>Trendyol Go</span>
+            <span class="text-[9px] opacity-80">📲</span>
+          </a>
+        </div>
       </div>
       <div class="flex items-center gap-4 text-xs font-medium">
         <a href="tel:+905528068706" class="js-phone-link hover:text-amberBrand-400 transition-colors flex items-center gap-1">
@@ -263,6 +278,18 @@
         <a href="#calisma-saatleri" class="hover:text-amberBrand-600 transition-colors">Çalışma Saatleri</a>
         <a href="#konum-ulasim" class="hover:text-amberBrand-600 transition-colors">Ulaşım &amp; Harita</a>
       </nav>
+
+      <!-- Desktop Online Delivery Links -->
+      <div class="hidden xl:flex items-center gap-1.5 p-1 bg-earth-50 border border-earth-200 rounded-2xl">
+        <a href="https://www.yemeksepeti.com/shop/aorj/petiyopya-pet-shop" target="_blank" rel="noopener noreferrer" class="js-yemeksepeti-link inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#ea004b] hover:bg-[#d00042] text-white font-bold text-xs transition-transform hover:scale-105 shadow-sm" title="Yemeksepeti Market'ten Sipariş Ver">
+          <span class="text-xs">🛵</span>
+          <span>Yemeksepeti</span>
+        </a>
+        <a href="https://www.trendyol.com" target="_blank" rel="noopener noreferrer" class="js-trendyol-link inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#f27a1a] hover:bg-[#d96509] text-white font-bold text-xs transition-transform hover:scale-105 shadow-sm" data-store="Petiyopya Pet Shop" title="Trendyol Go uygulamasında 'Petiyopya Pet Shop' mağazamızı bulun">
+          <span class="text-xs">📲</span>
+          <span>Trendyol Go</span>
+        </a>
+      </div>
 
       <!-- Action Buttons -->
       <div class="flex items-center gap-2 sm:gap-3">
@@ -329,6 +356,32 @@
           <p class="text-base sm:text-xl text-earth-700 font-normal leading-relaxed mb-8 max-w-2xl mx-auto lg:mx-0">
             İnternetten günlerce kargo beklemeye, bayat mama endişesine son! Eskişehir'deki mağazamıza gelin; can dostunuzla birlikte taze mama, kaliteli aksesuar ve oyuncakları yerinde inceleyin.
           </p>
+
+          <!-- Online Sipariş & Hızlı Kurye Kanalları (Yemeksepeti & Trendyol Go) -->
+          <div class="mb-8 p-3.5 sm:p-4 rounded-2xl bg-white/95 border border-earth-200 shadow-sm flex flex-col sm:flex-row items-center justify-between gap-3 text-left">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-xl bg-amberBrand-100 text-amberBrand-700 flex items-center justify-center flex-shrink-0 text-xl shadow-inner">
+                🛵
+              </div>
+              <div>
+                <div class="flex items-center gap-2">
+                  <span class="text-xs font-extrabold text-earth-950 uppercase tracking-wide">Online Hızlı Kurye Teslimatı</span>
+                  <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emeraldBrand-100 text-emeraldBrand-700">Kapınızda</span>
+                </div>
+                <p class="text-xs text-earth-600 mt-0.5">Eskişehir içi adresinize mama ve ürünleri hemen sipariş verin!</p>
+              </div>
+            </div>
+            <div class="flex items-center gap-2 w-full sm:w-auto">
+              <a href="https://www.yemeksepeti.com/shop/aorj/petiyopya-pet-shop" target="_blank" rel="noopener noreferrer" class="js-yemeksepeti-link flex-1 sm:flex-none inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl bg-[#ea004b] hover:bg-[#d00042] text-white text-xs font-bold transition-all shadow-sm hover:shadow hover:scale-105" title="Yemeksepeti Market'ten Sipariş Ver">
+                <span>Yemeksepeti</span>
+                <span class="text-[10px] opacity-80">↗</span>
+              </a>
+              <a href="https://www.trendyol.com" target="_blank" rel="noopener noreferrer" class="js-trendyol-link flex-1 sm:flex-none inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl bg-[#f27a1a] hover:bg-[#d96509] text-white text-xs font-bold transition-all shadow-sm hover:shadow hover:scale-105" data-store="Petiyopya Pet Shop" title="Trendyol Go uygulamasında 'Petiyopya Pet Shop' mağazamızı bulun">
+                <span>Trendyol Go</span>
+                <span class="text-[10px] opacity-80">📲</span>
+              </a>
+            </div>
+          </div>
 
           <!-- 2 Main CTAs -->
           <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-center lg:justify-start gap-4 mb-10">
@@ -415,6 +468,27 @@
                     Konum:
                   </span>
                   <span class="font-bold text-earth-900">Tepebaşı / Eskişehir</span>
+                </div>
+
+                <!-- Online Delivery Box -->
+                <div class="p-3 rounded-xl bg-earth-50 border border-earth-200">
+                  <div class="flex items-center justify-between text-xs mb-2">
+                    <span class="text-earth-600 font-medium flex items-center gap-1.5">
+                      <span>🛵</span>
+                      <span>Hızlı Kurye Siparişi:</span>
+                    </span>
+                    <span class="text-[10px] font-bold text-emeraldBrand-600">30-45 Dk</span>
+                  </div>
+                  <div class="grid grid-cols-2 gap-2">
+                    <a href="https://www.yemeksepeti.com/shop/aorj/petiyopya-pet-shop" target="_blank" rel="noopener noreferrer" class="js-yemeksepeti-link flex items-center justify-center gap-1 py-2 px-2 rounded-lg bg-[#ea004b] hover:bg-[#d00042] text-white text-xs font-bold transition-transform hover:scale-105 shadow-sm text-center">
+                      <span>Yemeksepeti</span>
+                      <span class="text-[9px]">↗</span>
+                    </a>
+                    <a href="https://www.trendyol.com" target="_blank" rel="noopener noreferrer" class="js-trendyol-link flex items-center justify-center gap-1 py-2 px-2 rounded-lg bg-[#f27a1a] hover:bg-[#d96509] text-white text-xs font-bold transition-transform hover:scale-105 shadow-sm text-center" data-store="Petiyopya Pet Shop" title="Trendyol Go uygulamasında 'Petiyopya Pet Shop' mağazamızı bulun">
+                      <span>Trendyol Go</span>
+                      <span class="text-[9px]">📲</span>
+                    </a>
+                  </div>
                 </div>
 
                 <!-- Instant WhatsApp Direct Ask -->
@@ -1089,6 +1163,8 @@
             <li><a href="#google-yorumlar" class="hover:text-amberBrand-400 transition-colors">Google Yorumları</a></li>
             <li><a href="#calisma-saatleri" class="hover:text-amberBrand-400 transition-colors">Çalışma Saatleri</a></li>
             <li><a href="https://www.google.com/maps/search/?api=1&amp;query=Bah%C3%A7elievler%20Mah.%20Prof.%20Dr.%20Orhan%20O%C4%9Fuz%20Cad.%2059%2FA%20Tepeba%C5%9F%C4%B1%2FEski%C5%9Fehir" target="_blank" rel="noopener noreferrer" class="js-maps-link hover:text-amberBrand-400 transition-colors">Google Haritalar</a></li>
+            <li><a href="https://www.yemeksepeti.com/shop/aorj/petiyopya-pet-shop" target="_blank" rel="noopener noreferrer" class="js-yemeksepeti-link hover:text-[#ea004b] transition-colors flex items-center gap-1.5"><span class="text-xs">🛵</span> Yemeksepeti Market</a></li>
+            <li><a href="https://www.trendyol.com" target="_blank" rel="noopener noreferrer" class="js-trendyol-link hover:text-[#f27a1a] transition-colors flex items-center gap-1.5" data-store="Petiyopya Pet Shop"><span class="text-xs">📲</span> Trendyol Go</a></li>
           </ul>
         </div>
 
@@ -1192,6 +1268,117 @@
       document.querySelectorAll(".js-review-link").forEach(el => {
         el.href = STORE_CONFIG.mapsReviewUrl;
       });
+      document.querySelectorAll(".js-yemeksepeti-link").forEach(el => {
+        if (STORE_CONFIG.yemeksepetiUrl) el.href = STORE_CONFIG.yemeksepetiUrl;
+      });
+      document.querySelectorAll(".js-trendyol-link").forEach(el => {
+        if (STORE_CONFIG.trendyolGoUrl) el.href = STORE_CONFIG.trendyolGoUrl;
+      });
+
+      // 2b. Smart Trendyol Go App Redirection & Info Modal
+      function setupTrendyolModal() {
+        let modal = document.getElementById("trendyol-go-modal");
+        if (!modal) {
+          modal = document.createElement("div");
+          modal.id = "trendyol-go-modal";
+          modal.className = "fixed inset-0 z-[99999] hidden items-center justify-center p-4 bg-black/80 backdrop-blur-sm";
+          modal.innerHTML = `
+            <div class="relative w-full max-w-md bg-white rounded-3xl p-6 sm:p-7 shadow-2xl border border-earth-200 text-center" style="font-family: inherit;">
+              <button type="button" id="close-trendyol-modal" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-earth-100 text-earth-600 hover:bg-earth-200 flex items-center justify-center font-bold text-base transition-colors">✕</button>
+              
+              <div class="w-16 h-16 rounded-2xl bg-[#fff2e8] border border-[#f27a1a]/30 text-[#f27a1a] flex items-center justify-center mx-auto mb-4 text-3xl shadow-sm">
+                🛵
+              </div>
+
+              <span class="inline-block px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-wider bg-[#fff2e8] text-[#f27a1a] mb-2">Trendyol Go Hızlı Market</span>
+              <h3 class="text-xl font-black text-earth-950 mb-2">Petiyopya Kapınızda!</h3>
+              <p class="text-xs sm:text-sm text-earth-600 leading-relaxed mb-5">
+                Trendyol mobil uygulamasındaki <strong>Trendyol Go (Hızlı Market)</strong> sekmesinden mağazamızı seçerek Eskişehir içi 30-45 dakikada hızlı teslimatla sipariş verebilirsiniz.
+              </p>
+
+              <!-- Store Name Copy Box -->
+              <div class="p-3.5 bg-earth-50 border border-earth-200 rounded-2xl mb-5 flex items-center justify-between gap-3 text-left">
+                <div>
+                  <span class="block text-[11px] font-semibold text-earth-500 uppercase tracking-wider">Aranacak Mağaza Adı:</span>
+                  <strong class="text-sm font-extrabold text-earth-950" id="modal-store-name">${STORE_CONFIG.trendyolGoStoreName || 'Petiyopya Pet Shop'}</strong>
+                </div>
+                <button type="button" id="copy-trendyol-store-btn" class="px-3 py-2 rounded-xl bg-earth-900 hover:bg-earth-950 text-white font-bold text-xs transition-colors flex items-center gap-1.5 flex-shrink-0">
+                  <span>📋 Kopyala</span>
+                </button>
+              </div>
+
+              <!-- Action Buttons -->
+              <div class="space-y-2.5">
+                <a href="trendyol://" id="launch-trendyol-app-btn" class="w-full py-3.5 px-4 rounded-xl bg-[#f27a1a] hover:bg-[#d96509] active:scale-[0.98] text-white font-extrabold text-sm transition-all shadow-md hover:shadow-lg flex items-center justify-center gap-2">
+                  <span>📱 Trendyol Uygulamasını Aç</span>
+                  <span>→</span>
+                </a>
+                
+                <div class="grid grid-cols-2 gap-2 pt-1">
+                  <a href="https://play.google.com/store/apps/details?id=trendyol.com" target="_blank" rel="noopener noreferrer" class="py-2.5 px-3 rounded-xl bg-earth-100 hover:bg-earth-200 text-earth-800 text-xs font-bold transition-colors flex items-center justify-center gap-1.5">
+                    <span>Google Play</span>
+                  </a>
+                  <a href="https://apps.apple.com/tr/app/trendyol-online-al%C4%B1%C5%9Fveri%C5%9F/id524362642" target="_blank" rel="noopener noreferrer" class="py-2.5 px-3 rounded-xl bg-earth-100 hover:bg-earth-200 text-earth-800 text-xs font-bold transition-colors flex items-center justify-center gap-1.5">
+                    <span>App Store</span>
+                  </a>
+                </div>
+              </div>
+
+              <div class="mt-4 text-[11px] text-earth-400">
+                Uygulama açıldığında üstteki <strong>Trendyol Go</strong> sekmesine dokunun ve arama alanına <strong>Petiyopya Pet Shop</strong> yazın.
+              </div>
+            </div>
+          `;
+          document.body.appendChild(modal);
+
+          const closeBtn = document.getElementById("close-trendyol-modal");
+          closeBtn.addEventListener("click", () => {
+            modal.classList.add("hidden");
+            modal.classList.remove("flex");
+          });
+
+          modal.addEventListener("click", (e) => {
+            if (e.target === modal) {
+              modal.classList.add("hidden");
+              modal.classList.remove("flex");
+            }
+          });
+
+          const copyBtn = document.getElementById("copy-trendyol-store-btn");
+          copyBtn.addEventListener("click", () => {
+            const storeName = document.getElementById("modal-store-name").textContent.trim();
+            navigator.clipboard.writeText(storeName).then(() => {
+              copyBtn.innerHTML = "<span>✓ Kopyalandı!</span>";
+              copyBtn.classList.replace("bg-earth-900", "bg-emeraldBrand-600");
+              setTimeout(() => {
+                copyBtn.innerHTML = "<span>📋 Kopyala</span>";
+                copyBtn.classList.replace("bg-emeraldBrand-600", "bg-earth-900");
+              }, 2000);
+            });
+          });
+        }
+
+        // Attach click listener to all Trendyol Go links
+        document.querySelectorAll(".js-trendyol-link").forEach(link => {
+          link.addEventListener("click", (e) => {
+            // If in admin edit mode, don't trigger modal
+            if (window.__petiyopyaAdminActive) {
+              return;
+            }
+            e.preventDefault();
+            modal.classList.remove("hidden");
+            modal.classList.add("flex");
+
+            // On mobile devices, try to trigger app scheme directly
+            const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+            if (isMobile) {
+              window.location.href = "trendyol://";
+            }
+          });
+        });
+      }
+
+      setupTrendyolModal();
 
       // 3. Dynamic Store Open/Close & Today Highlight Logic (Global & Re-usable)
       window.updateStoreStatusUI = function() {
@@ -1360,6 +1547,6 @@
   </script>
 
   <!-- In-Line WYSIWYG Editor & GitHub API Integration (Active on #admin or Ctrl+Shift+E) -->
-  <script src="admin.js?v=20260912-v3" defer></script>
+  <script src="admin.js?v=20260912-v4" defer></script>
 </body>
 </html>
