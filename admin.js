@@ -1164,9 +1164,9 @@
               <small>Tüm Yemeksepeti butonlarını günceller.</small>
             </div>
             <div class="drawer-field">
-              <label>📲 Trendyol Go Linki</label>
-              <input type="text" id="drawer-store-trendyol" placeholder="https://www.trendyol.com veya trendyol://">
-              <small>Tüm Trendyol Go butonlarını günceller.</small>
+              <label>📲 Trendyol Go: Yemek, Market, Su Linki</label>
+              <input type="text" id="drawer-store-trendyol" placeholder="https://play.google.com/store/apps/details?id=com.trendyol.go veya trendyolgo://">
+              <small>Tüm Trendyol Go butonlarını ve modalını günceller.</small>
             </div>
           </div>
         </div>
