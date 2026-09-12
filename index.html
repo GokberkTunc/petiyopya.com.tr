@@ -137,20 +137,13 @@
   "openingHoursSpecification": [
     {
       "@type": "OpeningHoursSpecification",
-      "dayOfWeek": [
-        "Monday",
-        "Tuesday",
-        "Wednesday",
-        "Thursday",
-        "Friday",
-        "Saturday"
-      ],
+      "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
       "opens": "11:00",
       "closes": "00:00"
     },
     {
       "@type": "OpeningHoursSpecification",
-      "dayOfWeek": "Sunday",
+      "dayOfWeek": ["Saturday", "Sunday"],
       "opens": "11:00",
       "closes": "00:00"
     }
@@ -203,6 +196,8 @@
       whatsappMessage: "Merhaba Petiyopya! Web sitenizden ulaşıyorum, mağazanızdaki ürünler ve stok durumu hakkında bilgi almak istiyorum.",
       email: "petiyopya@gmail.com",
       address: "Bahçelievler Mah. Prof. Dr. Orhan Oğuz Cad. 59/A Tepebaşı/Eskişehir",
+      workingHoursWeekday: "11:00 - 00:00",
+      workingHoursWeekend: "11:00 - 00:00",
       mapsDirectUrl: "https://www.google.com/maps/search/?api=1&query=Bah%C3%A7elievler%20Mah.%20Prof.%20Dr.%20Orhan%20O%C4%9Fuz%20Cad.%2059%2FA%20Tepeba%C5%9F%C4%B1%2FEski%C5%9Fehir",
       mapsReviewUrl: "https://maps.google.com/?q=Bah%C3%A7elievler+Mah.+Prof.+Dr.+Orhan+O%C4%9Fuz+Cad.+59%2FA+Tepeba%C5%9F%C4%B1+Eski%C5%9Fehir"
     };
@@ -411,7 +406,7 @@
                     <svg class="w-4 h-4 text-amberBrand-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                     Bugün:
                   </span>
-                  <span id="hero-today-hours" class="font-bold text-earth-900 text-emeraldBrand-600">09:00 - 00:00 (Şu Anda Açık)</span>
+                  <span id="hero-today-hours" class="font-bold text-emeraldBrand-600">11:00 - 00:00 (Şu Anda Açık)</span>
                 </div>
 
                 <div class="flex items-center justify-between p-3 rounded-xl bg-earth-50 border border-earth-200">
@@ -1198,67 +1193,173 @@
         el.href = STORE_CONFIG.mapsReviewUrl;
       });
 
-      // 3. Dynamic Store Open/Close & Today Highlight
-      const now = new Date();
-      const currentDay = now.getDay(); // 0: Sunday, 1: Monday, ... 6: Saturday
-      const currentHour = now.getHours();
-      const currentMinute = now.getMinutes();
-      const timeInMinutes = currentHour * 60 + currentMinute;
+      // 3. Dynamic Store Open/Close & Today Highlight Logic (Global & Re-usable)
+      window.updateStoreStatusUI = function() {
+        const now = new Date();
+        const currentDay = now.getDay(); // 0: Sunday, 1: Monday, ... 6: Saturday
+        const currentHour = now.getHours();
+        const currentMinute = now.getMinutes();
+        const timeInMinutes = currentHour * 60 + currentMinute;
 
-      let isOpen = false;
-      let openTimeMin = currentDay === 0 ? 600 : 540; // Sun: 10:00, Others: 09:00
-      let closeTimeMin = 1200; // 20:00
-
-      if (timeInMinutes >= openTimeMin && timeInMinutes < closeTimeMin) {
-        isOpen = true;
-      }
-
-      // Update Live Status Pill in Header
-      const statusPill = document.getElementById("live-status-pill");
-      const statusText = document.getElementById("live-status-text");
-      if (statusPill && statusText) {
-        if (isOpen) {
-          statusPill.className = "hidden lg:flex items-center gap-2 px-3 py-1.5 rounded-full bg-emeraldBrand-50 border border-emeraldBrand-200 text-xs font-semibold text-emeraldBrand-700";
-          statusText.textContent = "Şu Anda Açık (20:00'a kadar)";
-        } else {
-          statusPill.className = "hidden lg:flex items-center gap-2 px-3 py-1.5 rounded-full bg-amberBrand-50 border border-amberBrand-200 text-xs font-semibold text-amberBrand-800";
-          statusText.textContent = currentDay === 6 ? "Yarın 10:00'da Açılıyor" : "Yarın 09:00'da Açılıyor";
+        // Get schedule for a specific day from table or STORE_CONFIG
+        function getSchedule(dayIdx) {
+          const row = document.querySelector(`#weekly-hours-table .day-row[data-day="${dayIdx}"]`);
+          if (row) {
+            const span = row.querySelector("span:last-child");
+            if (span && span.textContent.trim()) return span.textContent.trim();
+          }
+          if (typeof STORE_CONFIG !== "undefined") {
+            if (dayIdx >= 1 && dayIdx <= 5 && STORE_CONFIG.workingHoursWeekday) {
+              return STORE_CONFIG.workingHoursWeekday;
+            }
+            if ((dayIdx === 6 || dayIdx === 0) && STORE_CONFIG.workingHoursWeekend) {
+              return STORE_CONFIG.workingHoursWeekend;
+            }
+          }
+          return "11:00 - 00:00";
         }
-      }
 
-      // Update Hero Today Hours
-      const heroHours = document.getElementById("hero-today-hours");
-      if (heroHours) {
-        const todaySchedule = currentDay === 0 ? "10:00 - 20:00" : "09:00 - 20:00";
-        heroHours.textContent = `${todaySchedule} (${isOpen ? 'Şu Anda Açık' : 'Şu Anda Kapalı'})`;
-        if (isOpen) {
-          heroHours.classList.add("text-emeraldBrand-600");
+        function parseMinutes(str, isClose) {
+          if (!str) return null;
+          const parts = str.trim().split(":");
+          if (parts.length < 2) return null;
+          const h = parseInt(parts[0], 10);
+          const m = parseInt(parts[1], 10);
+          if (isNaN(h) || isNaN(m)) return null;
+          if (isClose && (str.trim() === "00:00" || str.trim() === "24:00" || h === 24 || (h === 0 && m === 0))) {
+            return 1440; // Midnight end of day
+          }
+          return h * 60 + m;
         }
-      }
 
-      // Highlight Today in Weekly Table
-      const rows = document.querySelectorAll("#weekly-hours-table .day-row");
-      rows.forEach(row => {
-        const rowDay = parseInt(row.getAttribute("data-day"), 10);
-        if (rowDay === currentDay) {
-          row.classList.add("bg-amberBrand-100", "border", "border-amberBrand-300", "font-bold");
-          const dayNameSpan = row.querySelector("span:first-child");
-          if (dayNameSpan && !dayNameSpan.querySelector('.today-badge')) {
-            const rawDayName = dayNameSpan.textContent.trim().split(" ")[0];
-            dayNameSpan.innerHTML = `${rawDayName} <span class="today-badge ml-2 text-[10px] px-1.5 py-0.5 rounded bg-emeraldBrand-600 text-white font-black">${isOpen ? 'BUGÜN (AÇIK)' : 'BUGÜN'}</span>`;
+        function getKadarSuffix(str) {
+          const parts = (str || "").trim().split(":");
+          const h = parseInt(parts[0], 10);
+          const m = parts[1];
+          if (m && m !== "00") return "'a kadar";
+          switch (h) {
+            case 0: case 24: return "'a kadar";
+            case 1: case 11: case 21: return "'e kadar";
+            case 2: case 12: case 22: return "'ye kadar";
+            case 3: case 13: case 23: return "'e kadar";
+            case 4: case 14: return "'e kadar";
+            case 5: case 15: return "'e kadar";
+            case 6: case 16: return "'ya kadar";
+            case 7: case 17: return "'ye kadar";
+            case 8: case 18: return "'e kadar";
+            case 9: case 19: return "'a kadar";
+            case 10: return "'a kadar";
+            case 20: return "'ye kadar";
+            default: return "'a kadar";
           }
         }
-      });
+
+        function getAcilirSuffix(str) {
+          const parts = (str || "").trim().split(":");
+          const h = parseInt(parts[0], 10);
+          const m = parts[1];
+          if (m && m !== "00") return "'da Açılıyor";
+          switch (h) {
+            case 0: case 24: return "'da Açılıyor";
+            case 1: case 11: case 21: return "'de Açılıyor";
+            case 2: case 12: case 22: return "'de Açılıyor";
+            case 3: case 13: case 23: return "'te Açılıyor";
+            case 4: case 14: return "'te Açılıyor";
+            case 5: case 15: return "'te Açılıyor";
+            case 6: case 16: return "'da Açılıyor";
+            case 7: case 17: return "'de Açılıyor";
+            case 8: case 18: return "'de Açılıyor";
+            case 9: case 19: return "'da Açılıyor";
+            case 10: return "'da Açılıyor";
+            case 20: return "'de Açılıyor";
+            default: return "'da Açılıyor";
+          }
+        }
+
+        const todaySchedule = getSchedule(currentDay);
+        const schedParts = todaySchedule.split("-").map(s => s.trim());
+        const openStr = schedParts[0] || "11:00";
+        const closeStr = schedParts[1] || "00:00";
+
+        const openTimeMin = parseMinutes(openStr, false) ?? 660;
+        const closeTimeMin = parseMinutes(closeStr, true) ?? 1440;
+
+        let isOpen = false;
+        if (closeTimeMin > openTimeMin) {
+          isOpen = (timeInMinutes >= openTimeMin && timeInMinutes < closeTimeMin);
+        } else {
+          isOpen = (timeInMinutes >= openTimeMin || timeInMinutes < closeTimeMin);
+        }
+
+        // Update Live Status Pill in Header
+        const statusPill = document.getElementById("live-status-pill");
+        const statusText = document.getElementById("live-status-text");
+        if (statusPill && statusText) {
+          if (isOpen) {
+            statusPill.className = "hidden lg:flex items-center gap-2 px-3 py-1.5 rounded-full bg-emeraldBrand-50 border border-emeraldBrand-200 text-xs font-semibold text-emeraldBrand-700";
+            const ping = statusPill.querySelector(".animate-ping");
+            if (ping) ping.className = "animate-ping absolute inline-flex h-full w-full rounded-full bg-emeraldBrand-400 opacity-75";
+            const solid = statusPill.querySelector(".relative.inline-flex");
+            if (solid) solid.className = "relative inline-flex rounded-full h-2 w-2 bg-emeraldBrand-500";
+            statusText.textContent = `Şu Anda Açık (${closeStr}${getKadarSuffix(closeStr)})`;
+          } else {
+            statusPill.className = "hidden lg:flex items-center gap-2 px-3 py-1.5 rounded-full bg-amberBrand-50 border border-amberBrand-200 text-xs font-semibold text-amberBrand-800";
+            const ping = statusPill.querySelector(".animate-ping");
+            if (ping) ping.className = "animate-ping absolute inline-flex h-full w-full rounded-full bg-amberBrand-400 opacity-75";
+            const solid = statusPill.querySelector(".relative.inline-flex");
+            if (solid) solid.className = "relative inline-flex rounded-full h-2 w-2 bg-amberBrand-500";
+
+            if (timeInMinutes < openTimeMin) {
+              statusText.textContent = `Bugün ${openStr}${getAcilirSuffix(openStr)}`;
+            } else {
+              const tomorrowDay = (currentDay + 1) % 7;
+              const tomorrowSchedule = getSchedule(tomorrowDay);
+              const tomorrowOpen = tomorrowSchedule.split("-")[0].trim() || openStr;
+              statusText.textContent = `Yarın ${tomorrowOpen}${getAcilirSuffix(tomorrowOpen)}`;
+            }
+          }
+        }
+
+        // Update Hero Today Hours
+        const heroHours = document.getElementById("hero-today-hours");
+        if (heroHours) {
+          heroHours.textContent = `${todaySchedule} (${isOpen ? 'Şu Anda Açık' : 'Şu Anda Kapalı'})`;
+          if (isOpen) {
+            heroHours.className = "font-bold text-emeraldBrand-600";
+          } else {
+            heroHours.className = "font-bold text-amberBrand-600";
+          }
+        }
+
+        // Highlight Today in Weekly Table
+        const rows = document.querySelectorAll("#weekly-hours-table .day-row");
+        rows.forEach(row => {
+          const rowDay = parseInt(row.getAttribute("data-day"), 10);
+          const dayNameSpan = row.querySelector("span:first-child");
+          if (rowDay === currentDay) {
+            row.classList.add("bg-amberBrand-100", "border", "border-amberBrand-300", "font-bold");
+            if (dayNameSpan) {
+              const existingBadge = dayNameSpan.querySelector(".today-badge");
+              if (existingBadge) existingBadge.remove();
+              const rawDayName = dayNameSpan.textContent.trim().split(" ")[0];
+              dayNameSpan.innerHTML = `${rawDayName} <span class="today-badge ml-2 text-[10px] px-1.5 py-0.5 rounded ${isOpen ? 'bg-emeraldBrand-600' : 'bg-amberBrand-600'} text-white font-black">${isOpen ? 'BUGÜN (AÇIK)' : 'BUGÜN (KAPALI)'}</span>`;
+            }
+          } else {
+            row.classList.remove("bg-amberBrand-100", "border", "border-amberBrand-300", "font-bold");
+            if (dayNameSpan) {
+              const existingBadge = dayNameSpan.querySelector(".today-badge");
+              if (existingBadge) existingBadge.remove();
+            }
+          }
+        });
+      };
+
+      // Initial execution
+      window.updateStoreStatusUI();
     });
   </script>
 
   <!-- In-Line WYSIWYG Editor & GitHub API Integration (Active on #admin or Ctrl+Shift+E) -->
-  <script src="admin.js?v=20260912-smart" defer=""></script>
-
-
-
-
-
-
-
-</body></html>
+  <script src="admin.js?v=20260912-v3" defer></script>
+</body>
+</html>

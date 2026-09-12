@@ -202,16 +202,28 @@
         }
       });
 
-      const heroHours = document.getElementById('hero-today-hours');
-      if (heroHours && weekdayHours) {
-        heroHours.textContent = `${weekdayHours.trim()} (Şu Anda Açık)`;
-        this.pulseElement(heroHours);
+      if (weekdayHours) {
+        this.updateStoreConfigVar('workingHoursWeekday', `"${weekdayHours.trim()}"`);
+      }
+      if (weekendHours) {
+        this.updateStoreConfigVar('workingHoursWeekend', `"${weekendHours.trim()}"`);
       }
 
       this.updateSchemaHours(weekdayHours, weekendHours);
+
+      // Re-trigger dynamic calculation so header live pill and hero badge update instantly
+      if (typeof window.updateStoreStatusUI === 'function') {
+        window.updateStoreStatusUI();
+      }
+
+      const statusPill = document.getElementById('live-status-pill');
+      if (statusPill) this.pulseElement(statusPill);
+      const heroHours = document.getElementById('hero-today-hours');
+      if (heroHours) this.pulseElement(heroHours);
+
       incrementChangeCount();
       if (!silent) {
-        showToast('⏰ Çalışma saatleri haftalık tabloda ve Schema verisinde güncellendi!', 'success');
+        showToast('⏰ Çalışma saatleri haftalık tablo, canlı durum rozeti ve Schema verisinde senkronize edildi!', 'success');
       }
       return true;
     },
@@ -228,6 +240,8 @@
       const regex = new RegExp(`(${key}\\s*:\\s*)([^,\\n]+)(,?)`, 'g');
       if (regex.test(script.textContent)) {
         script.textContent = script.textContent.replace(regex, `$1${rawVal}$3`);
+      } else {
+        script.textContent = script.textContent.replace(/\s*(\};\s*)$/, `,\n      ${key}: ${rawVal}\n    $1`);
       }
     },
 
@@ -264,16 +278,26 @@
         if (Array.isArray(json.openingHoursSpecification)) {
           if (weekday) {
             const parts = weekday.split('-').map((s) => s.trim());
-            if (parts.length === 2 && json.openingHoursSpecification[0]) {
-              json.openingHoursSpecification[0].opens = parts[0];
-              json.openingHoursSpecification[0].closes = parts[1];
+            if (parts.length === 2) {
+              const weekdaySpec = json.openingHoursSpecification.find(
+                (spec) => Array.isArray(spec.dayOfWeek) ? spec.dayOfWeek.includes('Monday') : spec.dayOfWeek === 'Monday'
+              ) || json.openingHoursSpecification[0];
+              if (weekdaySpec) {
+                weekdaySpec.opens = parts[0];
+                weekdaySpec.closes = parts[1];
+              }
             }
           }
           if (weekend) {
             const parts = weekend.split('-').map((s) => s.trim());
-            if (parts.length === 2 && json.openingHoursSpecification[1]) {
-              json.openingHoursSpecification[1].opens = parts[0];
-              json.openingHoursSpecification[1].closes = parts[1];
+            if (parts.length === 2) {
+              const weekendSpec = json.openingHoursSpecification.find(
+                (spec) => Array.isArray(spec.dayOfWeek) ? (spec.dayOfWeek.includes('Saturday') || spec.dayOfWeek.includes('Sunday')) : (spec.dayOfWeek === 'Sunday' || spec.dayOfWeek === 'Saturday')
+              ) || json.openingHoursSpecification[1];
+              if (weekendSpec) {
+                weekendSpec.opens = parts[0];
+                weekendSpec.closes = parts[1];
+              }
             }
           }
           script.textContent = JSON.stringify(json, null, 2);
@@ -1811,7 +1835,7 @@
         if (badge) badge.remove();
         const span = row.querySelector('span:first-child');
         if (span) {
-          span.textContent = span.textContent.replace(/BUGÜN(\\s*\\(AÇIK\\))?/g, '').trim();
+          span.textContent = span.textContent.replace(/BUGÜN(\s*\([^)]+\))?/gi, '').trim();
         }
       });
 
