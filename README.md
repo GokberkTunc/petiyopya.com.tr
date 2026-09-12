@@ -1,4 +1,4 @@
-﻿# Petiyopya - Eskişehir Yerel Evcil Hayvan Mağazası (Pet Shop)
+# Petiyopya - Eskişehir Yerel Evcil Hayvan Mağazası (Pet Shop)
 
 Petiyopya için özel olarak tasarlanmış; online sepet/satış karmaşası yerine **tamamen Google aramalarında öne çıkmaya, Eskişehir'deki yerel müşteriyi fiziki mağazaya çekmeye ve doğrudan iletişime (Arama / WhatsApp / Yol Tarifi)** odaklanan modern, ultra hızlı ve hafif vitrin web sitesi.
 
@@ -30,9 +30,9 @@ const STORE_CONFIG = {
   whatsapp: "905550002626",            // wa.me formatı (başında + olmadan)
   whatsappMessage: "Merhaba Petiyopya! ...",
   email: "petiyopya@gmail.com",
-  address: "Eskişehir Merkez, Eskişehir",
-  mapsDirectUrl: "https://www.google.com/maps/search/?api=1&query=Petiyopya+Eskişehir",
-  mapsReviewUrl: "https://maps.google.com/?q=Petiyopya+Eskişehir"
+  address: "Bahçelievler Mah. Prof. Dr. Orhan Oğuz Cad. 59/A Tepebaşı/Eskişehir",
+  mapsDirectUrl: "https://www.google.com/maps/search/?api=1&query=Bah%C3%A7elievler+Mah.+Prof.+Dr.+Orhan+O%C4%9Fuz+Cad.+59%2FA+Tepeba%C5%9F%C4%B1+Eski%C5%9Fehir",
+  mapsReviewUrl: "https://maps.google.com/?q=Bah%C3%A7elievler+Mah.+Prof.+Dr.+Orhan+O%C4%9Fuz+Cad.+59%2FA+Tepeba%C5%9F%C4%B1+Eski%C5%9Fehir"
 };
 ```
 
