@@ -255,7 +255,7 @@
         <a href="#kategoriler" class="hover:text-amberBrand-600 transition-colors">Mağaza Vitrini</a>
         <a href="#google-yorumlar" class="hover:text-amberBrand-600 transition-colors flex items-center gap-1">
           <span>Google Yorumları</span>
-          <span class="px-1.5 py-0.5 rounded text-[10px] bg-amberBrand-100 text-amberBrand-800 font-bold">5.0&nbsp;<a href="https://petiyopya.com.tr/#google-yorumlar" class="hover:text-amberBrand-600 transition-colors flex items-center gap-1" style="background-color: rgba(245, 158, 11, 0.08); font-size: 0.875rem; --tw-translate-x: 0; --tw-translate-y: 0; --tw-rotate: 0; --tw-skew-x: 0; --tw-skew-y: 0; --tw-scale-x: 1; --tw-scale-y: 1; --tw-pan-x: ; --tw-pan-y: ; --tw-pinch-zoom: ; --tw-scroll-snap-strictness: proximity; --tw-gradient-from-position: ; --tw-gradient-via-position: ; --tw-gradient-to-position: ; --tw-ordinal: ; --tw-slashed-zero: ; --tw-numeric-figure: ; --tw-numeric-spacing: ; --tw-numeric-fraction: ; --tw-ring-inset: ; --tw-ring-offset-width: 0px; --tw-ring-offset-color: #fff; --tw-ring-color: rgb(59 130 246 / 0.5); --tw-ring-offset-shadow: 0 0 #0000; --tw-ring-shadow: 0 0 #0000; --tw-shadow: 0 0 #0000; --tw-shadow-colored: 0 0 #0000; --tw-blur: ; --tw-brightness: ; --tw-contrast: ; --tw-grayscale: ; --tw-hue-rotate: ; --tw-invert: ; --tw-saturate: ; --tw-sepia: ; --tw-drop-shadow: ; --tw-backdrop-blur: ; --tw-backdrop-brightness: ; --tw-backdrop-contrast: ; --tw-backdrop-grayscale: ; --tw-backdrop-hue-rotate: ; --tw-backdrop-invert: ; --tw-backdrop-opacity: ; --tw-backdrop-saturate: ; --tw-backdrop-sepia: ; --tw-contain-size: ; --tw-contain-layout: ; --tw-contain-paint: ; --tw-contain-style: ; border-radius: 4px; outline: rgb(16, 185, 129) solid 2px !important; outline-offset: 3px !important; display: inline !important;"><span class="px-1.5 py-0.5 rounded text-[10px] bg-amberBrand-100 text-amberBrand-800 font-bold" style="--tw-translate-x: 0; --tw-translate-y: 0; --tw-rotate: 0; --tw-skew-x: 0; --tw-skew-y: 0; --tw-scale-x: 1; --tw-scale-y: 1; --tw-pan-x: ; --tw-pan-y: ; --tw-pinch-zoom: ; --tw-scroll-snap-strictness: proximity; --tw-gradient-from-position: ; --tw-gradient-via-position: ; --tw-gradient-to-position: ; --tw-ordinal: ; --tw-slashed-zero: ; --tw-numeric-figure: ; --tw-numeric-spacing: ; --tw-numeric-fraction: ; --tw-ring-inset: ; --tw-ring-offset-width: 0px; --tw-ring-offset-color: #fff; --tw-ring-color: rgb(59 130 246 / 0.5); --tw-ring-offset-shadow: 0 0 #0000; --tw-ring-shadow: 0 0 #0000; --tw-shadow: 0 0 #0000; --tw-shadow-colored: 0 0 #0000; --tw-blur: ; --tw-brightness: ; --tw-contrast: ; --tw-grayscale: ; --tw-hue-rotate: ; --tw-invert: ; --tw-saturate: ; --tw-sepia: ; --tw-drop-shadow: ; --tw-backdrop-blur: ; --tw-backdrop-brightness: ; --tw-backdrop-contrast: ; --tw-backdrop-grayscale: ; --tw-backdrop-hue-rotate: ; --tw-backdrop-invert: ; --tw-backdrop-opacity: ; --tw-backdrop-saturate: ; --tw-backdrop-sepia: ; --tw-contain-size: ; --tw-contain-layout: ; --tw-contain-paint: ; --tw-contain-style: ; --tw-bg-opacity: 1; background-color: rgb(254, 243, 199); display: inline !important;">★</span></a></span>
+          <span class="px-1.5 py-0.5 rounded text-[10px] bg-amberBrand-100 text-amberBrand-800 font-bold">5.0 ★</span>
         </a>
         <a href="#calisma-saatleri" class="hover:text-amberBrand-600 transition-colors">Çalışma Saatleri</a>
         <a href="#konum-ulasim" class="hover:text-amberBrand-600 transition-colors">Ulaşım &amp; Harita</a>
@@ -876,9 +876,9 @@
                 <span class="font-medium text-earth-700">Cuma</span>
                 <span class="font-bold text-earth-950">11:00 - 00:00</span>
               </div>
-              <div class="day-row flex items-center justify-between py-2 px-3 rounded-xl transition-colors bg-amberBrand-100 border border-amberBrand-300 font-bold" data-day="6">
-                <span class="font-medium text-earth-700">Cumartesi BUGÜN (AÇIK) BUGÜN (AÇIK) <span class="ml-2 text-[10px] px-1.5 py-0.5 rounded bg-emeraldBrand-600 text-white font-black">BUGÜN (AÇIK)</span></span>
-                <span class="font-bold text-earth-950">11:00 -00:00</span>
+              <div class="day-row flex items-center justify-between py-2 px-3 rounded-xl transition-colors" data-day="6">
+                <span class="font-medium text-earth-700">Cumartesi</span>
+                <span class="font-bold text-earth-950">11:00 - 00:00</span>
               </div>
               <div class="day-row flex items-center justify-between py-2 px-3 rounded-xl transition-colors" data-day="0">
                 <span class="font-medium text-earth-700">Pazar</span>
@@ -1235,8 +1235,9 @@
         if (rowDay === currentDay) {
           row.classList.add("bg-amberBrand-100", "border", "border-amberBrand-300", "font-bold");
           const dayNameSpan = row.querySelector("span:first-child");
-          if (dayNameSpan) {
-            dayNameSpan.innerHTML = `${dayNameSpan.textContent} <span class="ml-2 text-[10px] px-1.5 py-0.5 rounded bg-emeraldBrand-600 text-white font-black">${isOpen ? 'BUGÜN (AÇIK)' : 'BUGÜN'}</span>`;
+          if (dayNameSpan && !dayNameSpan.querySelector('.today-badge')) {
+            const rawDayName = dayNameSpan.textContent.trim().split(" ")[0];
+            dayNameSpan.innerHTML = `${rawDayName} <span class="today-badge ml-2 text-[10px] px-1.5 py-0.5 rounded bg-emeraldBrand-600 text-white font-black">${isOpen ? 'BUGÜN (AÇIK)' : 'BUGÜN'}</span>`;
           }
         }
       });
@@ -1244,10 +1245,6 @@
   </script>
 
   <!-- In-Line WYSIWYG Editor & GitHub API Integration (Active on #admin or Ctrl+Shift+E) -->
-  <script src="admin.js" defer=""></script>
-<script type="module" src="https://static.cloudflareinsights.com/beacon.min.js/v31edd6df95cf4e85bb4c19e7a9bdbcba1788362987495" integrity="sha512-iIg7k2xntmwu6/uSb5tpc/hySgZc4eoL31yB29W6tJFo2akwjPWcEqnCEdJvGexCL0KEQwVYv5BlowfhVz26hg==" data-cf-beacon="{&quot;version&quot;:&quot;2024.11.0&quot;,&quot;token&quot;:&quot;da1cac9452cf4b48be9a918022cc8af8&quot;,&quot;r&quot;:1,&quot;spa&quot;:2}" crossorigin="anonymous"></script>
-
-
-<script type="module" src="https://static.cloudflareinsights.com/beacon.min.js/v31edd6df95cf4e85bb4c19e7a9bdbcba1788362987495" integrity="sha512-iIg7k2xntmwu6/uSb5tpc/hySgZc4eoL31yB29W6tJFo2akwjPWcEqnCEdJvGexCL0KEQwVYv5BlowfhVz26hg==" data-cf-beacon="{&quot;version&quot;:&quot;2024.11.0&quot;,&quot;token&quot;:&quot;da1cac9452cf4b48be9a918022cc8af8&quot;,&quot;r&quot;:1,&quot;spa&quot;:2}" crossorigin="anonymous"></script>
-<script type="module" src="https://static.cloudflareinsights.com/beacon.min.js/v31edd6df95cf4e85bb4c19e7a9bdbcba1788362987495" integrity="sha512-iIg7k2xntmwu6/uSb5tpc/hySgZc4eoL31yB29W6tJFo2akwjPWcEqnCEdJvGexCL0KEQwVYv5BlowfhVz26hg==" data-cf-beacon="{&quot;version&quot;:&quot;2024.11.0&quot;,&quot;token&quot;:&quot;da1cac9452cf4b48be9a918022cc8af8&quot;,&quot;r&quot;:1,&quot;spa&quot;:2}" crossorigin="anonymous"></script>
-</body></html>
+  <script src="admin.js" defer></script>
+</body>
+</html>

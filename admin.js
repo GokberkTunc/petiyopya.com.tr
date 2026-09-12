@@ -788,6 +788,36 @@
       const bodyInClone = clone.querySelector('body');
       if (bodyInClone) bodyInClone.classList.remove('petiyopya-preview-active');
 
+      // Strip Cloudflare beacon / analytics scripts injected at runtime
+      clone.querySelectorAll('script[src*="cloudflareinsights"], script[data-cf-beacon]').forEach((el) => el.remove());
+
+      // Clean dynamic weekly hours badge if present
+      clone.querySelectorAll('#weekly-hours-table .day-row').forEach((row) => {
+        row.classList.remove('bg-amberBrand-100', 'border', 'border-amberBrand-300', 'font-bold');
+        const badge = row.querySelector('.today-badge');
+        if (badge) badge.remove();
+        const span = row.querySelector('span:first-child');
+        if (span) {
+          span.textContent = span.textContent.replace(/BUGÜN(\s*\(AÇIK\))?/g, '').trim();
+        }
+      });
+
+      // Clean temporary focus/hover outline artifact styles
+      clone.querySelectorAll('[style]').forEach((el) => {
+        let s = el.getAttribute('style') || '';
+        if (s.includes('--tw-') || s.includes('outline:') || s.includes('rgba(245, 158, 11, 0.08)')) {
+          s = s.replace(/outline[^;]+;?/gi, '')
+               .replace(/--tw-[^;]+;?/gi, '')
+               .replace(/background-color:\s*rgba\(245,\s*158,\s*11,\s*0\.08\);?/gi, '')
+               .trim();
+          if (!s) {
+            el.removeAttribute('style');
+          } else {
+            el.setAttribute('style', s);
+          }
+        }
+      });
+
       // Clean HTML output
       const cleanHtml = '<!DOCTYPE html>\n' + clone.outerHTML;
 
