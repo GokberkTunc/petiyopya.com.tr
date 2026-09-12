@@ -1,0 +1,52 @@
+﻿# Petiyopya - Eskişehir Yerel Evcil Hayvan Mağazası (Pet Shop)
+
+Petiyopya için özel olarak tasarlanmış; online sepet/satış karmaşası yerine **tamamen Google aramalarında öne çıkmaya, Eskişehir'deki yerel müşteriyi fiziki mağazaya çekmeye ve doğrudan iletişime (Arama / WhatsApp / Yol Tarifi)** odaklanan modern, ultra hızlı ve hafif vitrin web sitesi.
+
+---
+
+## 🚀 Özellikler & Odak Noktaları
+
+- **Sıfır Build & Anında Yükleme:** Cloudflare Pages üzerinde derleme beklemeden doğrudan kök dizindeki (`index.html`) statik varlıklarla ışık hızında çalışır.
+- **Yerel SEO & Schema.org:** Google botları ve Haritalar için `schema.org/PetStore` tipinde eksiksiz JSON-LD yapılandırılmış verisi, coğrafi koordinatlar (`TR-26`, Eskişehir) ve Open Graph sosyal paylaşım kartları.
+- **Canlı Çalışma Durumu Rozeti:** Ziyaretçinin o anki gün ve saatine göre otomatik hesaplanan *"Şu Anda Açık (20:00'a kadar)"* veya *"Yarın 09:00'da Açılıyor"* akıllı bildirim rozeti.
+- **Mobil Odaklı İletişim:** Mobilde sayfa boyunca parmak ucunda kalan sabit alt bar:
+  - 📞 **Hemen Ara** (`tel:`)
+  - 🗺️ **Yol Tarifi Al** (Google Haritalar navigasyon linki)
+  - 💬 **WhatsApp** (Tek tıkla hazır stok sorgulama mesajı)
+- **Sosyal Kanıt & Google Yorumları:** 5.0 Google İşletme puanı rozeti, doğrulanmış müşteri yorumları ve doğrudan işletme profiline yönlendiren değerlendirme butonu.
+
+---
+
+## 🛠️ İletişim Bilgilerini Güncelleme (`STORE_CONFIG`)
+
+Sayfanın en başında yer alan `STORE_CONFIG` nesnesi sayesinde telefon, WhatsApp, adres ve Google Haritalar bağlantılarını tek bir yerden kolayca değiştirebilirsiniz:
+
+```javascript
+const STORE_CONFIG = {
+  name: "Petiyopya",
+  city: "Eskişehir",
+  phone: "+905550002626",              // Arama için tel: formatı
+  phoneDisplay: "0 (555) 000 26 26",    // Ekranda görünen numara
+  whatsapp: "905550002626",            // wa.me formatı (başında + olmadan)
+  whatsappMessage: "Merhaba Petiyopya! ...",
+  email: "petiyopya@gmail.com",
+  address: "Eskişehir Merkez, Eskişehir",
+  mapsDirectUrl: "https://www.google.com/maps/search/?api=1&query=Petiyopya+Eskişehir",
+  mapsReviewUrl: "https://maps.google.com/?q=Petiyopya+Eskişehir"
+};
+```
+
+---
+
+## ☁️ Cloudflare Pages Dağıtımı
+
+1. GitHub deponuzu Cloudflare Pages hesabınıza bağlayın.
+2. Ayarları aşağıdaki gibi yapılandırın:
+   - **Framework preset:** `None`
+   - **Build command:** *(Boş bırakın)*
+   - **Build output directory:** `/` veya `.`
+3. Dağıtımı başlatın. `main` dalına yapılan her push işlemi anında yayına yansıyacaktır.
+
+---
+
+© Petiyopya Petshop. Eskişehir, Türkiye.

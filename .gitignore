@@ -1,0 +1,13 @@
+﻿# Environment & OS
+.DS_Store
+Thumbs.db
+*.log
+__pycache__/
+*.pyc
+
+# Heavy raw print files (Web uses optimized assets/ folder)
+LOGO/*.zip
+LOGO/*.cpt
+LOGO/*.pdf
+temp_thumbs/
+scratch/

@@ -1,0 +1,44 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <defs>
+    <linearGradient id="petGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F59E0B" />
+      <stop offset="100%" stop-color="#D97706" />
+    </linearGradient>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2D1810" />
+      <stop offset="100%" stop-color="#1A0D08" />
+    </linearGradient>
+  </defs>
+  <!-- Background Rounded Squircle -->
+  <rect width="64" height="64" rx="18" fill="url(#bgGrad)" />
+  <!-- Outer subtle ring -->
+  <rect x="1.5" y="1.5" width="61" height="61" rx="16.5" fill="none" stroke="#D97706" stroke-width="1.5" stroke-opacity="0.4" />
+  
+  <!-- Dog Left Ear (Purple) -->
+  <path d="M18 20 C14 12, 10 24, 15 32 Z" fill="#6B21A8" />
+  <!-- Cat Right Ear (Amber) -->
+  <path d="M46 20 C50 12, 54 24, 49 32 Z" fill="url(#petGrad)" />
+  
+  <!-- Face Left (Dog - Purple) -->
+  <path d="M32 18 C22 18, 16 26, 16 38 C16 48, 25 52, 32 52 Z" fill="#6B21A8" />
+  <!-- Face Right (Cat - Amber) -->
+  <path d="M32 18 C42 18, 48 26, 48 38 C48 48, 39 52, 32 52 Z" fill="url(#petGrad)" />
+  
+  <!-- Dog Winking Eye (Left) -->
+  <path d="M22 34 Q26 31 30 35" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" fill="none" />
+  
+  <!-- Cat Eye (Right) -->
+  <ellipse cx="40" cy="34" rx="2.5" ry="3.5" fill="#1F2937" />
+  <circle cx="41" cy="33" r="1" fill="#FFFFFF" />
+  
+  <!-- Snout / Nose (Center) -->
+  <ellipse cx="32" cy="42" rx="4.5" ry="3.2" fill="#FFFFFF" />
+  <path d="M30 41 Q32 43 34 41" stroke="#1F2937" stroke-width="1.5" fill="none" stroke-linecap="round" />
+  
+  <!-- Cat Whiskers (Right) -->
+  <line x1="43" y1="41" x2="52" y2="40" stroke="#FFFFFF" stroke-width="1.2" stroke-linecap="round" opacity="0.8" />
+  <line x1="43" y1="44" x2="53" y2="45" stroke="#FFFFFF" stroke-width="1.2" stroke-linecap="round" opacity="0.8" />
+  
+  <!-- Emerald Tiny Accent Dot (Health & Trust) -->
+  <circle cx="48" cy="14" r="3" fill="#10B981" />
+</svg>
