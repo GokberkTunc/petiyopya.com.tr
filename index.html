@@ -103,7 +103,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
 
   <!-- Schema.org PetStore JSON-LD -->
-  <script type="application/ld+json">
+  <script type="application/ld+json" id="schema-petstore">
   {
     "@context": "https://schema.org",
     "@type": "PetStore",
@@ -184,7 +184,7 @@
   <!-- ============================================================ -->
   <!-- JAVASCRIPT STORE CONFIG (Kolayca Güncellenebilir İletişim Bilgileri) -->
   <!-- ============================================================ -->
-  <script>
+  <script id="store-config-script">
     const STORE_CONFIG = {
       name: "Petiyopya",
       tagline: "Eskişehir'in Güvenilir Evcil Hayvan Mağazası",
@@ -928,7 +928,7 @@
               <svg class="w-4 h-4 text-earth-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
               Kurumsal E-posta:
             </span>
-            <a href="mailto:petiyopya@gmail.com" class="font-bold text-earth-900 hover:text-amberBrand-600">petiyopya@gmail.com</a>
+            <a href="mailto:petiyopya@gmail.com" class="font-bold text-earth-900 hover:text-amberBrand-600 js-email-display">petiyopya@gmail.com</a>
           </div>
 
         </div>
@@ -942,7 +942,7 @@
               <div>
                 <span class="text-[11px] font-semibold text-amberBrand-400 uppercase tracking-wider">Tepebaşı / Eskişehir</span>
                 <h4 class="text-lg font-bold text-white">Petiyopya Evcil Hayvan Mağazası</h4>
-                <p class="text-xs text-earth-300">Bahçelievler Mah. Prof. Dr. Orhan Oğuz Cad. 59/A Tepebaşı/Eskişehir</p>
+                <p class="text-xs text-earth-300 js-address-display">Bahçelievler Mah. Prof. Dr. Orhan Oğuz Cad. 59/A Tepebaşı/Eskişehir</p>
               </div>
               <a href="https://www.google.com/maps/search/?api=1&amp;query=Bah%C3%A7elievler+Mah.+Prof.+Dr.+Orhan+O%C4%9Fuz+Cad.+59%2FA+Tepeba%C5%9F%C4%B1+Eski%C5%9Fehir" target="_blank" rel="noopener noreferrer" class="js-maps-link inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-amberBrand-500 hover:bg-amberBrand-600 text-earth-950 font-bold text-xs sm:text-sm shadow-md transition-all active:scale-95">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"></path></svg>
@@ -1107,7 +1107,7 @@
           <ul class="space-y-3 text-xs sm:text-sm text-earth-400">
             <li class="flex items-start gap-2">
               <span class="text-amberBrand-400 mt-0.5">📍</span>
-              <span>Bahçelievler Mah. Prof. Dr. Orhan Oğuz Cad. 59/A Tepebaşı/Eskişehir</span>
+              <span class="js-address-display">Bahçelievler Mah. Prof. Dr. Orhan Oğuz Cad. 59/A Tepebaşı/Eskişehir</span>
             </li>
             <li class="flex items-center gap-2">
               <span class="text-amberBrand-400">📞</span>
@@ -1119,7 +1119,7 @@
             </li>
             <li class="flex items-center gap-2">
               <span class="text-earth-400">✉️</span>
-              <a href="mailto:petiyopya@gmail.com" class="hover:text-white">petiyopya@gmail.com</a>
+              <a href="mailto:petiyopya@gmail.com" class="hover:text-white js-email-display">petiyopya@gmail.com</a>
             </li>
           </ul>
         </div>
