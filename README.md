@@ -14,6 +14,18 @@ Petiyopya için özel olarak tasarlanmış; online sepet/satış karmaşası yer
   - 🗺️ **Yol Tarifi Al** (Google Haritalar navigasyon linki)
   - 💬 **WhatsApp** (Tek tıkla hazır stok sorgulama mesajı)
 - **Sosyal Kanıt & Google Yorumları:** 5.0 Google İşletme puanı rozeti, doğrulanmış müşteri yorumları ve doğrudan işletme profiline yönlendiren değerlendirme butonu.
+- **Canlı Görsel Düzenleyici (In-Line WYSIWYG):** URL sonuna `#admin` ekleyerek veya `Ctrl + Shift + E` tuşlayarak sayfayı Word/FrontPage gibi doğrudan düzenleyebilir, tek tıkla GitHub API üzerinden Cloudflare Pages'e canlı commit gönderebilirsiniz.
+
+---
+
+## ✏️ Canlı Görsel Düzenleyici (FrontPage Modu)
+
+Site sahibi olarak herhangi bir kod editörü açmadan metinleri doğrudan tarayıcı üzerinden düzenleyebilirsiniz:
+
+1. **Aktivasyon:** Sitenizi açıp adres çubuğunun sonuna `#admin` ekleyin (örn: `petiyopya.com.tr/#admin`) veya klavyenizden **`Ctrl + Shift + E`** kısayolunu kullanın.
+2. **Kimlik Doğrulama:** İlk girişte açılan pencereye `repo` yetkisine sahip GitHub Personal Access Token (PAT) bilginizi girin. Token güvenli bir şekilde yalnızca sizin tarayıcınızın `localStorage` alanında saklanır.
+3. **Canlı Düzenleme:** Sayfadaki tüm başlık, paragraf, çalışma saatleri veya buton metinlerine doğrudan tıklayarak Word gibi düzenleyin.
+4. **Canlıya Kaydetme:** Sağ altta açılan çubuktan **"💾 Canlıya Kaydet"** butonuna basın. Sayfa DOM'u otomatik olarak temizlenir, UTF-8 Base64 formatında GitHub API'ye commit atılır ve Cloudflare Pages yaklaşık 20 saniye içinde sitenizi otomatik günceller.
 
 ---
 
