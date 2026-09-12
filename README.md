@@ -18,14 +18,26 @@ Petiyopya için özel olarak tasarlanmış; online sepet/satış karmaşası yer
 
 ---
 
-## ✏️ Canlı Görsel Düzenleyici (FrontPage Modu)
+## ✏️ Gelişmiş Canlı Görsel Düzenleyici (In-Line WYSIWYG Suite)
 
-Site sahibi olarak herhangi bir kod editörü açmadan metinleri doğrudan tarayıcı üzerinden düzenleyebilirsiniz:
+Site sahibi olarak herhangi bir kod editörü veya teknik bilgiye ihtiyaç duymadan sitenizi tarayıcıdan görsel olarak baştan sona yönetebilirsiniz:
 
-1. **Aktivasyon:** Sitenizi açıp adres çubuğunun sonuna `#admin` ekleyin (örn: `petiyopya.com.tr/#admin`) veya klavyenizden **`Ctrl + Shift + E`** kısayolunu kullanın.
-2. **Kimlik Doğrulama:** İlk girişte açılan pencereye `repo` yetkisine sahip GitHub Personal Access Token (PAT) bilginizi girin. Token güvenli bir şekilde yalnızca sizin tarayıcınızın `localStorage` alanında saklanır.
-3. **Canlı Düzenleme:** Sayfadaki tüm başlık, paragraf, çalışma saatleri veya buton metinlerine doğrudan tıklayarak Word gibi düzenleyin.
-4. **Canlıya Kaydetme:** Sağ altta açılan çubuktan **"💾 Canlıya Kaydet"** butonuna basın. Sayfa DOM'u otomatik olarak temizlenir, UTF-8 Base64 formatında GitHub API'ye commit atılır ve Cloudflare Pages yaklaşık 20 saniye içinde sitenizi otomatik günceller.
+1. **Aktivasyon:** Sitenizi açıp adres çubuğunun sonuna `#admin` ekleyin (örn: `petiyopya.com.tr/#admin`) veya klavyenizden **`Ctrl + Shift + E`** kısayoluna basın.
+2. **Kimlik Doğrulama:** İlk girişte açılan pencereye `repo` yetkisine sahip GitHub Personal Access Token (PAT) bilginizi girin. Token güvenli bir şekilde yalnızca sizin tarayıcınızın `localStorage` alanında saklanır, kaynak kodda veya sunucuda tutulmaz.
+3. **Zengin Metin Biçimlendirme (Floating Bubble Toolbar):**
+   - Herhangi bir metni seçtiğinizde hemen üzerinde mini biçimlendirme çubuğu belirir.
+   - **B** Kalın, *I* İtalik, <u>U</u> Altı Çizili, <s>S</s> Üstü Çizili
+   - **6 Özel Renk:** Petiyopya Amber Sarısı, Zümrüt Yeşili, Sıcak Kiremit, Marka Moru, Koyu Gri, Beyaz.
+   - **🔗 Bağlantı:** Seçilen metne kolayca web URL'si veya `tel:` linki bağlama/kaldırma.
+   - **🧹 Temizle:** Seçilen metindeki biçimlendirmeyi sıfırlama.
+4. **Kart Yönetimi (Çoğaltma & Silme):**
+   - Kategori kartları, Google müşteri yorumları ve SSS (akordeon) kutucuklarının üzerine geldiğinizde sağ üst köşede `➕ Kopyala` ve `🗑️ Sil` butonları belirir.
+   - Tek tıkla yeni ürün/kategori ekleyebilir veya mevcut olanı çoğaltıp metinlerini düzenleyebilirsiniz.
+5. **Görsel Değiştirici:**
+   - Resimlerin üzerine geldiğinizde sol üstte `📷 Resmi Değiştir` butonu belirir. Yeni görsel yolu/URL'si ve SEO alt etiketini hızlıca tanımlayabilirsiniz.
+6. **↩️ Geri Al / ↪️ İleri Al:** Yapılan değişiklikleri adım adım geri veya ileri alma imkanı.
+7. **👁️ Müşteri Önizleme Modu:** Tek tıkla düzenleme çizgilerini gizleyip sitenizi normal bir ziyaretçinin deneyimlediği gibi (tüm buton ve bağlantılarıyla) test edebilirsiniz.
+8. **💾 Canlıya Kaydetme:** Sağ altta açılan çubuktan **"💾 Canlıya Kaydet"** butonuna basın. Sayfa DOM'u tüm düzenleyici elementlerinden ve geçici sınıflardan arındırılır, UTF-8 Base64 formatında GitHub API'ye commit atılır ve Cloudflare Pages yaklaşık 20 saniye içinde sitenizi tüm dünyada canlıya alır.
 
 ---
 
