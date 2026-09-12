@@ -1,19 +1,20 @@
 /**
- * Petiyopya Akilli Canli Gorsel Duzenleyici (Smart In-Line WYSIWYG Suite) & GitHub API
+ * Petiyopya Akilli Canli Gorsel Duzenleyici (Smart In-Line WYSIWYG Suite v2.2) & GitHub API
  * 
  * 1. Akilli Reaktif Senkronizasyon (SmartSync):
  *    - Telefon, WhatsApp, Adres, E-posta ve Calisma Saatleri herhangi bir yerde degistiginde
  *      butun sitedeki metinler, href linkleri (tel, wa.me, maps), STORE_CONFIG ve Schema.org JSON-LD senkronize olur.
  * 2. Oge Tasima & Siralama:
  *    - Kategori, yorum ve SSS kartlari icin HTML5 Surukle-Birak (Drag & Drop) ve [◀/▲] [▶/▼] yon butonlari.
- *    - Ana bolumler icin [🔼 Bolumu Yukari Al] ve [🔽 Bolumu Asagi Al] kontrolleri.
+ *    - Tum ana bolumler icin [🔼 Bolumu Yukari Al] ve [🔽 Bolumu Asagi Al] kontrolleri.
  * 3. Yeniden Boyutlandirma:
  *    - Gorseller icin suruklenebilir kose tutamaci (Resize Handle) ve hazir boyut butonlari (%50, %75, %100).
  *    - Yuzen secim barinda A⁻ ve A⁺ ile metin/baslik font boyutu boyutlandirma.
  *    - Izgara duzeni icin [2'li], [3'lu], [4'lu] sutun degistirici.
  * 4. Hizli Bilgiler Cekmecesi (Smart Settings Drawer):
  *    - Sag alttan acilan panel ile magazaya ait tum iletisim ve calisma saatlerini tek ekrandan topluca guncelleme.
- * 5. Zengin Birlestirilmis Yuzen Format Bar & Undo/Redo & Musteri Onizleme.
+ * 5. Belirgin Gorsel Kontroller (High-Visibility Controls):
+ *    - Ust bilgilendirme seridi ve net gorunur kontrol rozetleri.
  * 6. Guvenli GitHub REST API & Tertemiz DOM Disa Aktarimi.
  */
 
@@ -35,7 +36,6 @@
   // 1. SMART SYNC ENGINE (Reaktif Akilli Senkronizasyon)
   // ============================================================
   const SmartSync = {
-    // Telefon numarasi formati
     formatPhone(input) {
       if (!input) return null;
       const digits = input.replace(/\D/g, '');
@@ -126,7 +126,6 @@
         this.pulseElement(el);
       });
 
-      // Harita iframe guncellemesi
       const iframe = document.querySelector('iframe[title*="Harita"]');
       if (iframe) {
         iframe.src = `https://maps.google.com/maps?q=${encodedAddr}&t=&z=16&ie=UTF8&iwloc=&output=embed`;
@@ -481,7 +480,7 @@
   }
 
   // ============================================================
-  // 4. ENABLE ADMIN MODE
+  // 4. ENABLE ADMIN MODE & TOP BANNER
   // ============================================================
   function enableAdminMode() {
     if (isAdminActive) return;
@@ -489,6 +488,7 @@
     isPreviewMode = false;
 
     injectAdminStyles();
+    createTopAdminBanner();
     attachEditableToText();
     attachCardControls();
     attachSectionControls();
@@ -497,13 +497,40 @@
     createFloatingAdminBar();
     createSmartDrawer();
 
-    showToast('✨ Akıllı Düzenleyici Aktif! Kartları taşıyabilir, boyutlandırabilir ve tek dokunuşla tüm siteyi senkronize edebilirsiniz.', 'info');
+    showToast('✨ Akıllı Düzenleyici Aktif! Tüm kontrol butonları ve akıllı araçlar görünür kılındı.', 'success');
+  }
+
+  function createTopAdminBanner() {
+    if (document.getElementById('petiyopya-top-admin-banner')) return;
+
+    const banner = document.createElement('div');
+    banner.id = 'petiyopya-top-admin-banner';
+    banner.className = 'petiyopya-ui-element';
+    banner.innerHTML = `
+      <div style="background:linear-gradient(90deg, #1b0f0a 0%, #2d1810 50%, #1b0f0a 100%);color:#fef3c7;border-bottom:2px solid #d97706;padding:8px 16px;display:flex;align-items:center;justify-content:space-between;font-family:system-ui,-apple-system,sans-serif;font-size:12px;font-weight:700;box-shadow:0 4px 15px rgba(0,0,0,0.5);position:sticky;top:0;z-index:999990;">
+        <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+          <span style="background:#d97706;color:#1b0f0a;padding:2px 8px;border-radius:6px;font-weight:900;font-size:10px;letter-spacing:0.05em;">AKILLI EDİTÖR v2.2</span>
+          <span>Sitedeki tüm metinleri doğrudan tıklayarak düzenleyebilir; kartları [◀/▶] veya [⋮⋮ Taşı] ile sıralayabilirsiniz.</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;">
+          <button type="button" id="petiyopya-top-drawer-btn" style="background:#d97706;color:#1b0f0a;border:none;border-radius:8px;padding:4px 10px;font-size:11px;font-weight:800;cursor:pointer;display:flex;align-items:center;gap:4px;">
+            ⚡ Hızlı Bilgiler Çekmecesi
+          </button>
+          <button type="button" id="petiyopya-top-exit-btn" style="background:none;border:none;color:#9ca3af;cursor:pointer;font-size:16px;padding:2px 6px;">✕</button>
+        </div>
+      </div>
+    `;
+
+    document.body.insertBefore(banner, document.body.firstChild);
+
+    document.getElementById('petiyopya-top-drawer-btn').addEventListener('click', openSmartDrawer);
+    document.getElementById('petiyopya-top-exit-btn').addEventListener('click', disableAdminMode);
   }
 
   function attachEditableToText() {
     const selector = 'h1, h2, h3, h4, h5, h6, p, span, li, a, strong, em, dt, dd';
     document.querySelectorAll(selector).forEach((el) => {
-      if (el.closest('#petiyopya-admin-bar') || el.closest('#petiyopya-admin-modal') || el.closest('#petiyopya-bubble-toolbar') || el.closest('.petiyopya-ui-element') || el.closest('script') || el.closest('style')) {
+      if (el.closest('#petiyopya-admin-bar') || el.closest('#petiyopya-admin-modal') || el.closest('#petiyopya-bubble-toolbar') || el.closest('#petiyopya-top-admin-banner') || el.closest('.petiyopya-ui-element') || el.closest('script') || el.closest('style')) {
         return;
       }
       el.setAttribute('contenteditable', 'true');
@@ -529,6 +556,7 @@
     const cardSelectors = [
       '#kategoriler .grid > div',
       '#google-yorumlar .grid > div',
+      '#sss details',
       'section details'
     ];
 
@@ -657,34 +685,34 @@
   }
 
   // ============================================================
-  // 6. SECTION REORDERING & GRID CONTROLS (Bölüm Taşıma)
+  // 6. UNIVERSAL SECTION REORDERING & GRID CONTROLS
   // ============================================================
   function attachSectionControls() {
-    const sections = [
-      { id: 'kategoriler', name: 'Vitrin Kategorileri', hasGrid: true },
-      { id: 'neden-biz', name: 'Neden Petiyopya?' },
-      { id: 'google-yorumlar', name: 'Google Müşteri Yorumları', hasGrid: true },
-      { id: 'calisma-saatleri', name: 'Çalışma Saatleri & Konum' },
-      { id: 'sss', name: 'Sıkça Sorulan Sorular' }
-    ];
+    const sections = document.querySelectorAll('body > section, main > section');
 
-    sections.forEach((secInfo) => {
-      let secEl = document.getElementById(secInfo.id);
-      if (!secEl) return;
-      if (secEl.tagName !== 'SECTION') {
-        const parentSec = secEl.closest('section');
-        if (parentSec) secEl = parentSec;
-      }
+    sections.forEach((secEl, index) => {
       if (secEl.querySelector(':scope > .petiyopya-section-badge')) return;
 
       secEl.style.position = 'relative';
+
+      let secTitle = 'Bölüm ' + (index + 1);
+      if (secEl.id === 'hero') secTitle = 'Giriş / Hero';
+      else if (secEl.id === 'kategoriler') secTitle = 'Vitrin Kategorileri';
+      else if (secEl.id === 'google-yorumlar') secTitle = 'Google Yorumları';
+      else if (secEl.id === 'konum-ulasim') secTitle = 'Konum & Çalışma Saatleri';
+      else if (secEl.id === 'sss') secTitle = 'Sıkça Sorulan Sorular';
+      else {
+        const heading = secEl.querySelector('h2, h3');
+        if (heading) secTitle = heading.textContent.trim().slice(0, 24);
+      }
 
       const secBadge = document.createElement('div');
       secBadge.className = 'petiyopya-section-badge petiyopya-ui-element';
       secBadge.contentEditable = 'false';
 
+      const hasGrid = !!secEl.querySelector('.grid');
       let gridControlsHtml = '';
-      if (secInfo.hasGrid) {
+      if (hasGrid) {
         gridControlsHtml = `
           <span class="sep"></span>
           <button type="button" class="btn-grid-cols" data-cols="2" title="2 Sütunlu Düzen">2'li</button>
@@ -694,7 +722,7 @@
       }
 
       secBadge.innerHTML = `
-        <span class="badge-title">📦 ${secInfo.name}</span>
+        <span class="badge-title">📦 ${secTitle}</span>
         <button type="button" class="btn-sec-up" title="Bu bölümü yukarı taşı">🔼 Yukarı</button>
         <button type="button" class="btn-sec-down" title="Bu bölümü aşağı taşı">🔽 Aşağı</button>
         ${gridControlsHtml}
@@ -711,7 +739,7 @@
         if (prevSec) {
           secEl.parentElement.insertBefore(secEl, prevSec);
           incrementChangeCount();
-          showToast(`"${secInfo.name}" bölümü yukarı taşındı!`, 'success');
+          showToast(`"${secTitle}" bölümü yukarı taşındı!`, 'success');
         } else {
           showToast('Bu bölüm zaten en üstte.', 'info');
         }
@@ -726,14 +754,14 @@
         if (nextSec) {
           secEl.parentElement.insertBefore(nextSec, secEl);
           incrementChangeCount();
-          showToast(`"${secInfo.name}" bölümü aşağı taşındı!`, 'success');
+          showToast(`"${secTitle}" bölümü aşağı taşındı!`, 'success');
         } else {
           showToast('Bu bölüm zaten en altta.', 'info');
         }
       });
 
       // Grid Column Switcher
-      if (secInfo.hasGrid) {
+      if (hasGrid) {
         secBadge.querySelectorAll('.btn-grid-cols').forEach((btn) => {
           btn.addEventListener('click', () => {
             const cols = btn.getAttribute('data-cols');
@@ -1220,6 +1248,9 @@
     const bar = document.getElementById('petiyopya-admin-bar');
     if (bar) bar.remove();
 
+    const topBanner = document.getElementById('petiyopya-top-admin-banner');
+    if (topBanner) topBanner.remove();
+
     document.body.classList.remove('petiyopya-preview-active');
 
     if (window.location.hash === '#admin') {
@@ -1230,7 +1261,7 @@
   }
 
   // ============================================================
-  // 12. INJECTED STYLES
+  // 12. INJECTED STYLES (Yüksek Görünürlük & Belirgin Kontroller)
   // ============================================================
   function injectAdminStyles() {
     if (document.getElementById('petiyopya-admin-styles')) return;
@@ -1283,7 +1314,7 @@
         display: none !important;
       }
 
-      /* Kart Yonetimi Rozeti */
+      /* Kart Yonetimi Rozeti (Belirgin ve Net) */
       .petiyopya-card-badge {
         position: absolute;
         top: 8px;
@@ -1291,19 +1322,18 @@
         z-index: 9999;
         display: flex;
         align-items: center;
-        gap: 3px;
-        background: rgba(27, 15, 10, 0.92);
-        backdrop-filter: blur(6px);
+        gap: 4px;
+        background: #1b0f0a;
         padding: 4px 6px;
         border-radius: 10px;
-        border: 1px solid #d97706;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-        opacity: 0.25;
-        transition: opacity 0.2s ease;
+        border: 1.5px solid #d97706;
+        box-shadow: 0 4px 14px rgba(0,0,0,0.5);
+        opacity: 0.9;
+        transition: transform 0.15s ease, opacity 0.15s ease;
       }
-      .petiyopya-card-badge:hover,
-      *:hover > .petiyopya-card-badge {
+      .petiyopya-card-badge:hover {
         opacity: 1;
+        transform: scale(1.03);
       }
       .petiyopya-card-badge button {
         background: #2d1810;
@@ -1322,8 +1352,9 @@
       }
       .petiyopya-card-badge .btn-card-drag {
         cursor: grab;
-        background: #452314;
-        color: #fcd34d;
+        background: #d97706;
+        color: #1b0f0a;
+        font-weight: 900;
       }
 
       /* Drag Placeholder */
@@ -1331,35 +1362,34 @@
         min-height: 120px;
         border: 2px dashed #10b981 !important;
         border-radius: 16px;
-        background: rgba(16, 185, 129, 0.06);
+        background: rgba(16, 185, 129, 0.08);
         margin: 8px 0;
       }
       .petiyopya-dragging {
-        opacity: 0.4 !important;
+        opacity: 0.35 !important;
         outline: 2px dashed #d97706 !important;
       }
 
-      /* Bolum Yonetimi Rozeti */
+      /* Bolum Yonetimi Rozeti (Her Bolumun Basinda Net Gorunur) */
       .petiyopya-section-badge {
         position: absolute;
-        top: 12px;
-        left: 16px;
+        top: 10px;
+        left: 14px;
         z-index: 9998;
         display: flex;
         align-items: center;
         gap: 6px;
-        background: rgba(27, 15, 10, 0.9);
+        background: #1b0f0a;
         border: 1.5px solid #d97706;
         border-radius: 12px;
-        padding: 4px 8px;
+        padding: 5px 10px;
         font-size: 11px;
         color: #ffffff;
-        box-shadow: 0 4px 14px rgba(0,0,0,0.4);
-        opacity: 0.3;
+        box-shadow: 0 6px 18px rgba(0,0,0,0.5);
+        opacity: 0.92;
         transition: opacity 0.2s ease;
       }
-      .petiyopya-section-badge:hover,
-      *:hover > .petiyopya-section-badge {
+      .petiyopya-section-badge:hover {
         opacity: 1;
       }
       .petiyopya-section-badge .badge-title {
@@ -1372,8 +1402,8 @@
         color: #ffffff;
         border: 1px solid #5b3a29;
         border-radius: 6px;
-        padding: 3px 6px;
-        font-size: 10px;
+        padding: 3px 8px;
+        font-size: 11px;
         font-weight: 700;
         cursor: pointer;
       }
@@ -1397,18 +1427,18 @@
         display: flex;
         align-items: center;
         gap: 4px;
-        background: rgba(27, 15, 10, 0.94);
+        background: #1b0f0a;
         color: #fcd34d;
-        border: 1px solid #d97706;
+        border: 1.5px solid #d97706;
         padding: 4px 8px;
         border-radius: 8px;
         font-size: 11px;
         font-weight: 700;
-        opacity: 0;
+        opacity: 0.9;
         transition: opacity 0.2s ease;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.5);
       }
-      *:hover > .petiyopya-img-badge {
+      .petiyopya-img-badge:hover {
         opacity: 1;
       }
       .petiyopya-img-badge button {
@@ -1435,18 +1465,19 @@
         position: absolute;
         bottom: 4px;
         right: 4px;
-        width: 16px;
-        height: 16px;
+        width: 18px;
+        height: 18px;
         background: #d97706;
         border: 2px solid #ffffff;
         border-radius: 4px;
         cursor: se-resize;
         z-index: 9999;
-        opacity: 0;
-        transition: opacity 0.2s ease;
+        opacity: 0.9;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+        transition: transform 0.15s ease;
       }
-      *:hover > .petiyopya-resize-handle {
-        opacity: 1;
+      .petiyopya-resize-handle:hover {
+        transform: scale(1.2);
       }
 
       /* Yuzen Secim Format Cubugu */
@@ -1519,7 +1550,7 @@
       .petiyopya-drawer .drawer-overlay {
         position: fixed;
         inset: 0;
-        background: rgba(0,0,0,0.7);
+        background: rgba(0,0,0,0.75);
         backdrop-filter: blur(4px);
       }
       .petiyopya-drawer .drawer-content {
@@ -1653,8 +1684,8 @@
           <span style="font-size:12px;font-weight:800;letter-spacing:0.02em;color:#fef3c7;">AKILLI EDİTÖR</span>
         </div>
 
-        <!-- Smart Drawer Button -->
-        <button type="button" id="petiyopya-drawer-btn" title="Tüm mağaza iletişim ve çalışma saatlerini topluca yönet" style="display:flex;align-items:center;gap:5px;background:#2d1810;color:#fcd34d;border:1px solid #5b3a29;border-radius:12px;padding:8px 12px;font-size:12px;font-weight:700;cursor:pointer;">
+        <!-- Smart Drawer Button (Glowing) -->
+        <button type="button" id="petiyopya-drawer-btn" title="Tüm mağaza iletişim ve çalışma saatlerini topluca yönet" style="display:flex;align-items:center;gap:5px;background:#2d1810;color:#fcd34d;border:1.5px solid #d97706;border-radius:12px;padding:8px 12px;font-size:12px;font-weight:800;cursor:pointer;box-shadow:0 0 10px rgba(217,119,6,0.3);">
           <span>⚡ Hızlı Bilgiler</span>
         </button>
 
@@ -1744,6 +1775,9 @@
       clone.querySelectorAll('.petiyopya-ui-element').forEach((el) => el.remove());
       const barInClone = clone.querySelector('#petiyopya-admin-bar');
       if (barInClone) barInClone.remove();
+
+      const topBannerInClone = clone.querySelector('#petiyopya-top-admin-banner');
+      if (topBannerInClone) topBannerInClone.remove();
 
       const modalInClone = clone.querySelector('#petiyopya-admin-modal');
       if (modalInClone) modalInClone.remove();
@@ -1912,7 +1946,7 @@
 
     toast.style.cssText = `
       position: fixed;
-      top: 24px;
+      top: 48px;
       left: 50%;
       transform: translateX(-50%);
       background: ${bg};
@@ -1923,7 +1957,6 @@
       font-weight: 700;
       box-shadow: 0 10px 25px -5px rgba(0,0,0,0.5);
       z-index: 9999999;
-      font-family: system-ui, -apple-system, sans-serif;
       animation: petiyopyaFadeIn 0.2s ease-out;
       pointer-events: none;
       display: flex;
